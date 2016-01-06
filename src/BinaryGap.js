@@ -8,21 +8,19 @@
 function binaryGap(number) {
     var current = 0;
     var lastBit;
-    var maxGap = 0;
+    var maxGap = -1;
 
     while (number > 0) {
-        lastBit = number & 1;       // get lees significant bit
+        lastBit = number & 1;       // get less significant bit
         number = number >> 1;       // remove less significant bit
 
-        if (lastBit) {
-            if (maxGap < current) maxGap = current;
-            current = 0;
-        } else {
-            current++;
-        }
+        current = lastBit ? 0 : current + 1;
+
+        if (lastBit && maxGap >= 0 && maxGap < current)
+            maxGap = current;
     }
 
-    return maxGap;
+    return maxGap < 0 ? 0 : maxGap;
 }
 
 /**
@@ -38,16 +36,17 @@ function binaryGapAlternative(number) {
     // worst-case time complexity is O(32)
     var binaryString = number.toString(2);
     var current = 0;
-    var maxGap = 0;
+    var maxGap = -1;
 
-    for (var i = 0; i < binaryString.length; i++) {
+    for (var i = binaryString.length - 1; i >= 0; i--) {
         if (binaryString[i] === '1') {
-            if (maxGap < current) maxGap = current;
+            if (maxGap >= 0 && maxGap < current)
+                maxGap = current;
             current = 0;
         } else {
             current++;
         }
     }
 
-    return maxGap;
+    return maxGap < 0 ? 0 : maxGap;
 }
