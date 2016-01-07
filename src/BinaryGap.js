@@ -11,15 +11,15 @@ function binaryGap(number) {
     var maxGap = -1;
 
     while (number > 0) {
-        lastBit = number & 1;       // get less significant bit
-        number = number >> 1;       // remove less significant bit
-
-        current = lastBit ? 0 : current + 1;
+        lastBit = number & 1;                   // get less significant bit
+        number = number >> 1;                   // remove less significant bit
+        current = lastBit ? 0 : current + 1;    // update current count
 
         if (lastBit && maxGap >= 0 && maxGap < current)
             maxGap = current;
     }
 
+    // check if is any gap, if not return 0 instead -1
     return maxGap < 0 ? 0 : maxGap;
 }
 
